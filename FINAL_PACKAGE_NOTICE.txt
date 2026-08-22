@@ -1,0 +1,16 @@
+Paket ini adalah hasil gabungan dari:
+1. smaibnuaqil-laravel.zip (base Laravel project)
+2. ppdb-ui-micro-ux-components-patch-with-readme.zip (UI/UX patch + views + controllers + README)
+3. goaa7147_sma_ibnu_aqil.sql (dump database legacy)
+4. smaibnuaqil.zip (source PHP native sebagai referensi asset/modul lama)
+
+Yang sudah ditambahkan/dirapikan:
+- source Laravel lengkap + patch UI/UX
+- migration yang disesuaikan ke skema legacy
+- SQL tambahan untuk tabel CMS yang belum ada di dump lama
+- seed awal untuk konten CMS agar halaman publik tidak kosong
+- catatan migrasi di docs/MIGRATION_NOTES.md
+
+Catatan:
+- Jalankan `php artisan storage:link` setelah setup.
+- Bila dependency vendor di mesin lokal masih bermasalah, jalankan `composer install`.

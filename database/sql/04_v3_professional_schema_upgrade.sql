@@ -1,0 +1,3 @@
+-- Jalankan file ini hanya jika kamu ingin menambahkan skema v3 secara manual tanpa php artisan migrate.
+-- Disarankan tetap memakai migration Laravel agar lebih aman.
+-- File ini hanya placeholder dokumentasi; sumber kebenaran ada pada migration 2026_03_23_*.php
