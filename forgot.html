@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupa Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="text"] { /* Input untuk username */
+            width: calc(100% - 22px); 
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        /* Untuk pesan jika menggunakan JavaScript */
+        .pesan {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            text-align: left;
+        }
+        .sukses {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Lupa Password</h2>
+
+        <div id="pesan-container"></div>
+
+        <form action="proses_forgot.php" method="POST">
+            <div>
+                <label for="username">Masukkan Username Anda:</label>
+                <input type="text" id="username" name="username" placeholder="Username Anda" required>
+            </div>
+            <div>
+                <input type="submit" value="Kirim Link Reset">
+            </div>
+        </form>
+        <a href="login.php" class="back-link">← Kembali ke Login</a>
+    </div>
+
+    <script>
+        // OPSIONAL: JavaScript untuk menampilkan pesan dari parameter URL
+        // Ini berguna jika proses_forgot.php melakukan redirect kembali ke forgot.html dengan parameter status.
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            const status = params.get('status');
+            const pesanContainer = document.getElementById('pesan-container');
+            let message = '';
+            let messageType = '';
+
+            if (status === 'sukses_kirim') {
+                message = 'Jika username Anda valid dan terhubung dengan email, link reset password telah dikirim. Silakan periksa kotak masuk (dan folder spam) email Anda.';
+                messageType = 'sukses';
+            } else if (status === 'gagal_kirim') {
+                message = 'Gagal mengirim email. Server email mungkin bermasalah atau email tidak valid.';
+                messageType = 'error';
+            } else if (status === 'username_tidak_terdaftar') {
+                message = 'Username tidak terdaftar di sistem kami atau tidak memiliki email terkait.';
+                messageType = 'error';
+            } else if (status === 'username_kosong') {
+                message = 'Kolom username tidak boleh kosong.';
+                messageType = 'error';
+            }
+            // Anda bisa menambahkan status lain jika diperlukan
+
+            if (message) {
+                pesanContainer.innerHTML = `<div class="pesan ${messageType}">${message}</div>`;
+                // Membersihkan parameter status dari URL agar tidak muncul lagi jika halaman di-refresh (opsional)
+                if (window.history.replaceState) {
+                    const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                    window.history.replaceState({path:cleanUrl}, '', cleanUrl);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
